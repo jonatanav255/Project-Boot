@@ -1,0 +1,55 @@
+# Ignore Maven & Gradle specific files
+target/
+build/
+
+# Ignore Eclipse IDE specific files
+.classpath
+.project
+.settings/
+
+# Ignore IntelliJ IDEA specific files
+*.iml
+.idea/
+*.ipr
+*.iws
+out/
+
+# Ignore VS Code specific files
+.vscode/
+
+# Ignore Log files
+*.log
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.swp
+*~
+
+# Ignore compiled Java class files
+*.class
+
+# Ignore package-lock and yarn files
+package-lock.json
+yarn.lock
+
+# Ignore application-specific properties
+application.properties
+application.yml
+
+# Ignore Maven wrapper files
+.mvn/wrapper/maven-wrapper.jar
+
+# Ignore test coverage reports
+coverage/
+test-results/
+jacoco.exec
+*.ec
+*.exec
+
+# Ignore binary archives
+*.jar
+*.war
+*.ear
