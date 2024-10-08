@@ -50,5 +50,22 @@ public class FileUploadController {
     }
 
 
- 
+    @GetMapping("/download/{filename}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+
+        try {
+            Path filePath = Paths.get(UPLOAD_DIR).resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (!resource.exists()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        return ResponseEntity.ok().body(resource);
+
+        } catch (MalformedURLException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
+    }
 }
