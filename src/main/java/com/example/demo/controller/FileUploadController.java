@@ -13,6 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Logger;
 
 
 
@@ -22,6 +23,7 @@ import java.nio.file.Paths;
 public class FileUploadController {
 
     private static final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads";
+    private static final Logger logger = Logger.getLogger(FileUploadController.class.getName());
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -49,23 +51,25 @@ public class FileUploadController {
         }
     }
 
-
     @GetMapping("/download/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-
         try {
+            // Build the file path
             Path filePath = Paths.get(UPLOAD_DIR).resolve(filename).normalize();
+
             Resource resource = new UrlResource(filePath.toUri());
 
-            if (!resource.exists()) {
+            // Check if the file exists and is readable
+            if (!resource.exists() || !resource.isReadable()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        return ResponseEntity.ok().body(resource);
 
+
+            // Return the file as a response
+            return ResponseEntity.ok()
+                    .body(resource);
         } catch (MalformedURLException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
-
     }
 }
