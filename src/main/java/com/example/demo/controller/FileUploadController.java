@@ -13,17 +13,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.logging.Logger;
-
-
-
 
 @RestController
 @RequestMapping("/api/files")
 public class FileUploadController {
 
     private static final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads";
-    private static final Logger logger = Logger.getLogger(FileUploadController.class.getName());
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -46,7 +41,6 @@ public class FileUploadController {
 
             return new ResponseEntity<>("File uploaded successfully: " + filePath, HttpStatus.OK);
         } catch (IOException e) {
-            e.printStackTrace();
             return new ResponseEntity<>("File upload failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
